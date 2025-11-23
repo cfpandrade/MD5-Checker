@@ -29,5 +29,4 @@ else
     echo "-------------------"
     echo "Hashes do not match"
     echo "-------------------"
-
 fi

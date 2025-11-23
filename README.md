@@ -12,7 +12,7 @@ Before using this script, ensure that you have the following:
 ## Usage
 
 To run the script, execute the following command:
-./file_hash_checker.sh <file> <hash>
+./md5check <file> <hash>
 
 - `<file>`: The path to the file you want to check.
 - `<hash>`: The expected hash value of the file.
@@ -22,7 +22,7 @@ If the file and hash arguments are not provided or if the file does not exist, t
 ## Example
 
 Here's an example of how to use the script:
-./file_hash_checker.sh myfile.txt d41d8cd98f00b204e9800998ecf8427e
+./md5check myfile.txt d41d8cd98f00b204e9800998ecf8427e
 
 This command checks if the file `myfile.txt` has an MD5 hash of `d41d8cd98f00b204e9800998ecf8427e`. If the computed hash matches the expected hash, it displays the message "Hashes match." Otherwise, it displays the message "Hashes do not match."
 

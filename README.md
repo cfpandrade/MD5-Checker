@@ -12,21 +12,58 @@ Before using this script, ensure that you have the following:
 ## Usage
 
 To run the script, execute the following command:
-./file_hash_checker.sh <file> <hash>
+./md5check <file> <hash>
 
 - `<file>`: The path to the file you want to check.
-- `<hash>`: The expected hash value of the file.
+- `<hash>`: The expected MD5 hash value of the file (32 hexadecimal characters).
 
-If the file and hash arguments are not provided or if the file does not exist, the script will display an error message and exit with a non-zero status code.
+**Color-coded output:**
+- Success messages appear in **green**
+- Error messages appear in **red**
+
+The script validates that:
+- Both arguments are provided
+- The file exists
+- The hash is in valid MD5 format (32 hexadecimal characters)
+
+If any validation fails, the script will display an error message and exit with a non-zero status code.
 
 ## Example
 
 Here's an example of how to use the script:
-./file_hash_checker.sh myfile.txt d41d8cd98f00b204e9800998ecf8427e
+```bash
+./md5check myfile.txt d41d8cd98f00b204e9800998ecf8427e
+```
 
-This command checks if the file `myfile.txt` has an MD5 hash of `d41d8cd98f00b204e9800998ecf8427e`. If the computed hash matches the expected hash, it displays the message "Hashes match." Otherwise, it displays the message "Hashes do not match."
+This command checks if the file `myfile.txt` has an MD5 hash of `d41d8cd98f00b204e9800998ecf8427e`.
 
-Please note that the expected hash should be the MD5 hash of the file, represented as a 32-character hexadecimal string.
+**Output when hashes match (displayed in green):**
+```
+------------
+Hashes match
+------------
+Hash: d41d8cd98f00b204e9800998ecf8427e
+```
+
+**Output when hashes don't match (displayed in red):**
+```
+-------------------
+Hashes do not match
+-------------------
+Expected: d41d8cd98f00b204e9800998ecf8427e
+Computed: 5d41402abc4b2a76b9719d911017c592
+```
+
+**Error cases (displayed in red):**
+```bash
+# Invalid hash format
+./md5check myfile.txt invalidhash
+# Output: Error: Invalid MD5 hash format.
+
+# File doesn't exist
+./md5check nonexistent.txt d41d8cd98f00b204e9800998ecf8427e
+# Output: The file 'nonexistent.txt' does not exist.
+```
 
 ## License
 

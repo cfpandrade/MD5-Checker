@@ -1,8 +1,13 @@
 #!/bin/bash
 
+# Color definitions
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+NC='\033[0m' # No Color
+
 # Check if both arguments are provided
 if [ "$#" -ne 2 ]; then
-    echo "Missing file or hash in the command."
+    echo -e "${RED}Missing file or hash in the command.${NC}"
     echo "Usage: md5check <file> <hash>"
     exit 1
 fi
@@ -11,9 +16,16 @@ fi
 file=$1
 expected_hash=$2
 
+# Validate hash format (MD5 should be 32 hexadecimal characters)
+if ! [[ "$expected_hash" =~ ^[a-fA-F0-9]{32}$ ]]; then
+    echo -e "${RED}Error: Invalid MD5 hash format.${NC}"
+    echo "MD5 hash must be 32 hexadecimal characters."
+    exit 1
+fi
+
 # Check if the file exists
 if [ ! -f "$file" ]; then
-    echo "The file '$file' does not exist."
+    echo -e "${RED}The file '$file' does not exist.${NC}"
     exit 1
 fi
 
@@ -22,12 +34,14 @@ computed_hash=$(md5sum "$file" | awk '{print $1}')
 
 # Compare the hashes
 if [ "$computed_hash" = "$expected_hash" ]; then
-    echo "------------"
-    echo "Hashes match"
-    echo "------------"
+    echo -e "${GREEN}------------${NC}"
+    echo -e "${GREEN}Hashes match${NC}"
+    echo -e "${GREEN}------------${NC}"
+    echo -e "${GREEN}Hash: $computed_hash${NC}"
 else
-    echo "-------------------"
-    echo "Hashes do not match"
-    echo "-------------------"
-
+    echo -e "${RED}-------------------${NC}"
+    echo -e "${RED}Hashes do not match${NC}"
+    echo -e "${RED}-------------------${NC}"
+    echo -e "${RED}Expected: $expected_hash${NC}"
+    echo -e "${RED}Computed: $computed_hash${NC}"
 fi
